@@ -53,17 +53,23 @@ extension TableViewCellHelper: UITableViewDataSource {
         cell.nameLabel.text = rowItem.name
         cell.iconLabel.text = rowItem.shortName
         cell.priceLabel.text = rowItem.price
-       
-        if let url = rowItem.iconUrl {
+         
+        //for image caching
+        if let data = rowItem.iconData {
+            cell.iconImageView.image = UIImage(data: data)
+        }
+        else if let url = rowItem.iconUrl {
             let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, errror in
                 if let data = data {
                     DispatchQueue.main.async {
                         cell.iconImageView.image = UIImage(data: data)
+                        rowItem.iconData = data
                     }
                 }
             }
             task.resume()
         }
+    
         cell.iconImageView.contentMode = .scaleAspectFit
         
         return cell

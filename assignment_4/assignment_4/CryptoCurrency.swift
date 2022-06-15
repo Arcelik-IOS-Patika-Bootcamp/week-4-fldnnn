@@ -17,10 +17,17 @@ struct Icon: Codable {
     var url: String?
 }
  
-struct CryptoTableViewCellModel {
+class CryptoTableViewCellModel {
     var name: String?
     var shortName: String?
     var price: String?
     var iconUrl: URL?
-    //var iconData: Data?
+    var iconData: Data?
+     
+    init(name: String?, shortName: String?,price: String?, iconUrl: URL?) {
+        self.name = name
+        self.iconUrl = iconUrl
+        self.shortName = shortName
+        self.price = price
+    }
 }
